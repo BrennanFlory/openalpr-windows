@@ -559,8 +559,8 @@ function Build-OpenALPR
         "-DOPENALPR_VERSION=$OpenALPRVersionMajorMinorPatch",
         "-DWITH_GPU_DETECTOR=$OpenALPR_WITH_GPU_DETECTOR",
         "-DWITH_TESTS=OFF",
-        "-DWITH_BINDING_JAVA=OFF",
-        "-DWITH_BINDING_PYTHON=OFF",
+        "-DWITH_BINDING_JAVA=ON",
+        "-DWITH_BINDING_PYTHON=ON",
         "-DWITH_UTILITIES=ON",
         "-DCMAKE_BUILD_TYPE=$Configuration",
         "-Wno-dev",
@@ -676,6 +676,8 @@ function Copy-Build-Result-To
     Copy-Item $OpenALPROutputDir\video\$Configuration\video.lib -Force $DestinationDir\video.lib | Out-Null
     Copy-Item $OpenALPROutputDir\openalpr\support\$Configuration\support.lib -Force $DestinationDir\support.lib | Out-Null
     Copy-Item $OpenALPROutputDir\statedetection\$Configuration\statedetection.lib -Force $DestinationDir\statedetection.lib | Out-Null
+    Copy-Item $OpenALPROutputDir\bindings\java\$Configuration\openalprjni.dll -Force $DestinationDir\openalprjni.dll | Out-Null
+    Copy-Item $OpenALPROutputDir\bindings\python\$Configuration\openalprpy.dll -Force $DestinationDir\openalprpy.dll | Out-Null
     Copy-Item $OpenALPRDir\runtime_data\ -Recurse -Force $DestinationDir\runtime_data\ | Out-Null
     Copy-Item $OpenALPRDir\config\openalpr.conf.in -Force $DestinationDir\openalpr.conf | Out-Null
     (Get-Content $DestinationDir\openalpr.conf) -replace '^runtime_dir.*$', 'runtime_dir = runtime_data' | Out-File $DestinationDir\openalpr.conf -Encoding "ASCII" | Out-Null
