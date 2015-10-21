@@ -615,6 +615,7 @@ function Build-OpenALPRNet
 
     $VcxProjectFilename = Join-Path $OpenALPRNetDirOutputDir openalpr-net.vcxproj
 
+
     function Copy-Sources
     {		
         Copy-Item $OpenALPRNetDir -Recurse -Force $OpenALPRNetDirOutputDir | Out-Null
@@ -629,6 +630,15 @@ function Build-OpenALPRNet
         Set-AssemblyVersion $OpenALPRNetDirOutputDir\AssemblyInfo.cpp $OpenALPRVersion
     }
 
+	function Fix-Project
+	{
+		# Replace the version number in the project
+		(Get-Content $VcxProjectFilename) | 
+		Foreach-Object {$_ -replace '<OpenALPRVersion>2.1.0</OpenALPRVersion>','<OpenALPRVersion>2.2.0</OpenALPRVersion>'}  | 
+		Out-File $VcxProjectFilename
+		
+	}
+	
     function Build-Sources
     {
         Msbuild $VcxProjectFilename $OpenALPRNetDirOutputDir\$Configuration @(
@@ -641,6 +651,7 @@ function Build-OpenALPRNet
     }
     
     Copy-Sources
+	Fix-Project
     Build-Sources	
 	
 	Copy-Build-Result-To $DistDir
