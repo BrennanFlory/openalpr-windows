@@ -694,7 +694,7 @@ function Copy-Build-Result-To
     Copy-Item $OpenALPROutputDir\bindings\java\$Configuration\openalprjni.dll -Force $DestinationDir\openalprjni.dll | Out-Null
     Copy-Item $OpenALPROutputDir\bindings\python\$Configuration\openalprpy.dll -Force $DestinationDir\openalprpy.dll | Out-Null
     Copy-Item $OpenALPRDir\runtime_data\ -Recurse -Force $DestinationDir\runtime_data\ | Out-Null
-    Copy-Item $OpenALPRDir\config\openalpr.conf.in -Force $DestinationDir\openalpr.conf | Out-Null
+    Copy-Item $OpenALPRDir\config\openalpr.conf.defaults -Force $DestinationDir\openalpr.conf | Out-Null
     (Get-Content $DestinationDir\openalpr.conf) -replace '^runtime_dir.*$', 'runtime_dir = runtime_data' | Out-File $DestinationDir\openalpr.conf -Encoding "ASCII" | Out-Null
 
 }
